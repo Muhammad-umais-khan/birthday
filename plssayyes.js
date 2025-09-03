@@ -72,7 +72,7 @@ function drawCertificate(your, their, dateStr) {
   ctx.fillStyle = "#fff";
   ctx.font = "700 28px Poppins, sans-serif";
   ctx.textAlign = "center";
-  ctx.fillText("Officially Silly Marriage Certificate", canvas.width / 2, 80);
+  ctx.fillText("Officially  Marriage Certificate", canvas.width / 2, 80);
 
   ctx.fillStyle = "#333";
   ctx.font = "500 18px Poppins, sans-serif";
@@ -91,11 +91,7 @@ function drawCertificate(your, their, dateStr) {
   ctx.font = "500 14px Poppins, sans-serif";
   ctx.fillStyle = "#444";
   ctx.fillText(`Date: ${dateStr}`, canvas.width / 3, 420);
-  ctx.fillText(
-    "Official silly witness: The Internet",
-    (canvas.width / 3) * 2,
-    420
-  );
+  ctx.fillText("Official witness: The Internet", (canvas.width / 3) * 2, 420);
 
   ctx.strokeStyle = "#d8a2b8";
   ctx.lineWidth = 2;

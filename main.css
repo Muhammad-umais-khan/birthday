@@ -70,6 +70,11 @@ header {
   font-weight: 700;
   font-size: 1.1rem;
 }
+#click {
+  text-decoration: none;
+  color: #b03b6b;
+  font-weight: bold;
+}
 .typed {
   height: 25px;
   margin-top: 14px;

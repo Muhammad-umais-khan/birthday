@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Happy Birthday 💖</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ff3b6b' d='M12 21s-7.33-4.87-9.29-7.03C.79 10.93 3.6 6 7.5 6c2.04 0 3.8 1.1 4.5 2.72C12.7 7.1 14.46 6 16.5 6 20.4 6 23.21 10.93 21.29 13.97 19.33 16.13 12 21 12 21z'/%3E%3C/svg%3E"
+    />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- iOS home screen -->
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff3b6b" />
+    <!-- pinned-tab monochrome -->
+    <meta name="theme-color" content="#ff3b6b" />
+    <!-- address bar color on mobile -->
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div id="gate">
+      <h1>
+        🎉 Surprise at <span id="gateDays">--</span>d
+        <span id="gateHours">--</span>h <span id="gateMins">--</span>m
+        <span id="gateSecs">--</span>s 🎉
+      </h1>
+    </div>
+    <div id="realContent" style="display: none">
+      <div class="card" role="main" aria-label="Birthday card">
+        <div class="hearts" id="hearts"></div>
+
+        <header>
+          <div>
+            <div class="title">Happy Birthday 🎂</div>
+            <div class="subtitle">
+              Oct 13 — counting down to your special day
+            </div>
+            <div class="typed" id="typed">
+              halloo this message types itself... ✨
+            </div>
+          </div>
+          <div class="countdown" aria-hidden="false">
+            <div class="box">
+              <div class="n" id="days">--</div>
+              <div class="l">Days</div>
+            </div>
+            <div class="box">
+              <div class="n" id="hours">--</div>
+              <div class="l">Hours</div>
+            </div>
+            <div class="box">
+              <div class="n" id="mins">--</div>
+              <div class="l">Mins</div>
+            </div>
+            <div class="box">
+              <div class="n" id="secs">--</div>
+              <div class="l">Secs</div>
+            </div>
+          </div>
+        </header>
+
+        <main>
+          <section class="left">
+            <h3 style="margin: 0">little reasons (click a card)</h3>
+            <div class="reasons">
+              <div class="flip" onclick="flip(this)">
+                <div class="card-face">
+                  <div class="front">Your Smile</div>
+                  <div class="back">Lights up my day like a sunrise ☀️</div>
+                </div>
+              </div>
+              <div class="flip" onclick="flip(this)">
+                <div class="card-face">
+                  <div class="front">Your Laugh</div>
+                  <div class="back">Makes everything instantly better 😄</div>
+                </div>
+              </div>
+              <div class="flip" onclick="flip(this)">
+                <div class="card-face">
+                  <div class="front">How You Care</div>
+                  <div class="back">You're thoughtful in tiny ways 💛</div>
+                </div>
+              </div>
+              <div class="flip" onclick="flip(this)">
+                <div class="card-face">
+                  <div class="front">Your Roblox Skill</div>
+                  <div class="back">
+                    Can beat any obby i couldn't even try 😅
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="right">
+            <div class="photo" id="photo">
+              <div class="slide" id="slideA" aria-hidden="true"></div>
+              <div class="slide" id="slideB" aria-hidden="true"></div>
+              <div class="photo-text" id="photoText">Add her photo here</div>
+            </div>
+
+            <div class="reveal">
+              <div style="font-weight: 700">Your gift</div>
+              <div class="gift" id="gift">Click below to reveal 🎁</div>
+              <button class="btn" id="revealBtn">Reveal Gift</button>
+            </div>
+          </aside>
+        </main>
+
+        <footer style="margin-top: 18px; color: #666; font-size: 0.9rem">
+          Made with ❤️
+          <a id="click" href="plssayyes.html">click this link 👀</a>
+        </footer>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

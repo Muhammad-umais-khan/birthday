@@ -130,3 +130,51 @@ revealBtn.addEventListener("click", () => {
     () => (timer = setInterval(showNext, CHANGE_INTERVAL))
   );
 })();
+const launchDate = new Date(2025, 9, 13, 0, 0, 0); // Oct 13, 2025
+
+function updateGate() {
+  const now = new Date();
+  const diff = launchDate - now;
+
+  if (diff <= 0) {
+    // time reached: hide gate, show real site
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("realContent").style.display = "block";
+    return;
+  }
+
+  // Otherwise keep updating the gate countdown
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
+  const secs = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("gateDays").textContent = days;
+  document.getElementById("gateHours").textContent = hours;
+  document.getElementById("gateMins").textContent = mins;
+  document.getElementById("gateSecs").textContent = secs;
+
+  setTimeout(updateGate, 1000);
+}
+
+updateGate();
+// block right click
+document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+// block F12, Ctrl+Shift+I, etc.
+document.addEventListener("keydown", (e) => {
+  if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+    e.preventDefault();
+  }
+});
+
+// detect devtools (rough)
+setInterval(() => {
+  if (
+    window.outerHeight - window.innerHeight > 200 ||
+    window.outerWidth - window.innerWidth > 200
+  ) {
+    alert("No peeking 👀");
+    window.location.reload();
+  }
+}, 1000);
