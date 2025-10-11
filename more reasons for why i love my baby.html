@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>100 Reasons I Love You</title>
+    <style>
+      :root {
+        --bg: #fff7fb;
+        --accent: #ff7ab6;
+        --accent-2: #84f0d9;
+        --paper: #fffdf6;
+        --text: #2b2b2b;
+        --card-radius: 24px;
+        --card-padding: 36px;
+        --shadow: 0 10px 30px rgba(43, 43, 43, 0.08);
+      }
+
+      /* Page */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+        background: radial-gradient(
+            800px 400px at 10% 10%,
+            rgba(132, 240, 217, 0.12),
+            transparent 8%
+          ),
+          radial-gradient(
+            700px 350px at 90% 90%,
+            rgba(255, 122, 182, 0.08),
+            transparent 10%
+          ),
+          var(--bg);
+        color: var(--text);
+        display: grid;
+        place-items: center;
+        padding: 28px;
+      }
+
+      /* Big card container */
+      .card {
+        width: min(920px, 96vw);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.96),
+          var(--paper)
+        );
+        border-radius: var(--card-radius);
+        padding: var(--card-padding);
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(43, 43, 43, 0.04);
+        display: grid;
+        grid-template-rows: 1fr auto;
+        gap: 18px;
+      }
+
+      /* decorative header */
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .badge {
+        width: 62px;
+        height: 62px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #fff;
+        font-weight: 700;
+        font-size: 26px;
+        box-shadow: 0 6px 18px rgba(132, 240, 217, 0.22);
+      }
+      .title {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .subtitle {
+        font-size: 13px;
+        color: rgba(43, 43, 43, 0.6);
+        margin-top: 4px;
+      }
+
+      /* reason area */
+      .viewport {
+        position: relative;
+        height: 340px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+      }
+
+      .reason {
+        width: 100%;
+        max-width: 760px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 255, 255, 0.8)
+        );
+        border-radius: 18px;
+        padding: 34px;
+        text-align: center;
+        font-size: 26px;
+        line-height: 1.25;
+        font-weight: 600;
+        color: var(--text);
+        box-shadow: 0 8px 30px rgba(43, 43, 43, 0.06);
+        transform-origin: center;
+        will-change: transform, opacity;
+      }
+
+      .meta {
+        margin-top: 12px;
+        text-align: center;
+        font-size: 13px;
+        color: rgba(43, 43, 43, 0.6);
+      }
+
+      /* next button */
+      .controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        padding-top: 4px;
+      }
+
+      .next-btn {
+        --size: 64px;
+        width: var(--size);
+        height: var(--size);
+        border-radius: 999px;
+        border: none;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        font-size: 28px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: white;
+        box-shadow: 0 10px 30px rgba(255, 122, 182, 0.18),
+          inset 0 -6px 18px rgba(0, 0, 0, 0.06);
+        transition: transform 180ms ease, box-shadow 180ms ease;
+        outline: none;
+      }
+      .next-btn:active {
+        transform: translateY(2px) scale(0.995);
+      }
+      .next-btn:hover {
+        box-shadow: 0 14px 38px rgba(255, 122, 182, 0.22);
+      }
+
+      /* small helper buttons (not required, hidden) */
+      .controls .hint {
+        font-size: 13px;
+        color: rgba(43, 43, 43, 0.6);
+      }
+
+      /* slide animation */
+      .animate-out {
+        animation: slideOut 320ms cubic-bezier(0.2, 0.9, 0.15, 1) forwards;
+      }
+      .animate-in {
+        animation: slideIn 320ms cubic-bezier(0.2, 0.9, 0.15, 1) forwards;
+      }
+      @keyframes slideOut {
+        0% {
+          transform: translateX(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-34px) scale(0.98);
+          opacity: 0;
+        }
+      }
+      @keyframes slideIn {
+        0% {
+          transform: translateX(34px) scale(0.98);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0) scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* small responsive tweaks */
+      @media (max-width: 560px) {
+        .reason {
+          font-size: 18px;
+          padding: 22px;
+        }
+        .viewport {
+          height: 260px;
+        }
+        .badge {
+          width: 50px;
+          height: 50px;
+          font-size: 22px;
+          border-radius: 12px;
+        }
+        .next-btn {
+          --size: 56px;
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card" role="main" aria-label="100 reasons I love you card">
+      <div class="card-header">
+        <div class="badge">❤</div>
+        <div>
+          <div class="title">100 Reasons I Love You</div>
+          <div class="subtitle">i love my baby so so so so so sooooo much</div>
+        </div>
+      </div>
+
+      <section class="viewport" aria-live="polite">
+        <div id="reason" class="reason" role="article" aria-atomic="true">
+          Loading…
+        </div>
+      </section>
+
+      <div>
+        <div class="meta" id="meta">—</div>
+        <div class="controls" aria-hidden="false">
+          <div class="hint">Tap the heart to see another reason</div>
+          <button
+            id="nextBtn"
+            class="next-btn"
+            title="Next reason (Space / Click)"
+          >
+            ❤
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Reworded loving reasons (80 items, ALL CAPS & affectionate)
+      const reasons = [
+        "I ADORE YOU",
+        "I ADORE YOUR WHOLE PERSONALITY",
+        "I TREASURE EVERYTHING ABOUT YOU 🥺",
+        "I CHERISH YOUR MORALS",
+        "I ADMIRE THE CAUSES YOU STAND FOR",
+        "I ADORE HOW MUCH YOU INVEST IN THIS RELATIONSHIP 🥺",
+        "I LOVE THE WAY YOU LISTEN TO ME WITH YOUR HEART",
+        "I LOVE HOW YOU GIVE YOUR BEST TO EVERYTHING YOU DO",
+        "I LOVE THAT YOU PUSH US TO BE BETTER WHILE LOVING US NOW",
+        "I LOVE HOW YOU HOLD ONTO THE LITTLE DETAILS I SHARE 🥺",
+        "I LOVE HOW SAFE AND AT-EASE YOU MAKE ME FEEL",
+        "I LOVE THE CALM YOU BRING INTO MY LIFE",
+        "I LOVE YOUR GENTLE, STEADY PRESENCE",
+        "I LOVE HOW YOU LOVE ME SO FULLY",
+        "I LOVE THAT YOU'RE JUST AS CRAZY ABOUT ME",
+        "I LOVE SPENDING EVERY MINUTE I CAN WITH YOU",
+        "I LOVE HOW YOU WANT TO BE WITH ME AS MUCH AS POSSIBLE",
+        "I LOVE BEING HAPPILY OBSESSED WITH YOU",
+        "I LOVE CHATTING ABOUT NOTHING AND EVERYTHING WITH YOU",
+        "I LOVE PLAYFUL MOMENTS WE SHARE TOGETHER",
+        "I LOVE OUR TEXTS THAT LIGHT UP MY DAY",
+        "I LOVE OUR TINY ANIME CONVOS AFTER EACH EPISODE",
+        "I LOVE WHEN YOU SAY 'US' AND IT FEELS REAL 🥺",
+        "I LOVE HOW YOU SAY 'OUR' LIKE IT BELONGS TO BOTH OF US 🥺🥺🥺🥺🥺",
+        "I LOVE BEING CALLED YOUR SOULMATE 🥺",
+        "I LOVE YOUR DREAMS FOR OUR FUTURE",
+        "I LOVE YOUR DAYDREAMS THAT INCLUDE US",
+        "I LOVE WHEN YOU CALL ME YOURS",
+        "I LOVE THE SWEET NICKNAMES YOU GIVE ME",
+        "I LOVE THAT YOU SAY I'M THE BEST, EVEN AT MY WORST 🥺",
+        "I LOVE THAT WE FIND A MIDDLE GROUND AND HAVE SO MUCH FUN 🥺",
+        "I LOVE YOUR SMILE",
+        "I LOVE YOUR FEATURES",
+        "I LOVE YOUR EYES",
+        "I LOVE YOUR NOSE",
+        "I LOVE YOUR CHEEKS",
+        "I LOVE YOUR SOFT LIPS 🥺🥺",
+        "I LOVE THE CURVE OF YOUR NECK",
+        "I LOVE YOUR STYLE AND HOW YOU DRESS",
+        "I LOVE HOW STUNNING YOU LOOK IN SOME PHOTOS",
+        "I LOVE HOW ADORABLE YOU LOOK IN OTHER PHOTOS",
+        "I LOVE THAT YOU PULL OFF BOTH HOT AND CUTE 😫",
+        "I LOVE YOUR SELFIES 💋",
+        "I LOVE YOUR FULL-BODY PICTURES 😍",
+        "I LOVE YOUR SILLY PICTURES 🥺💋",
+        "I LOVE THE PICS YOU SHARE WITH ME 🥺",
+        "I LOVE THE DRAWINGS YOU MADE FOR ME :(",
+        "I LOVE YOUR RANDOM HANDMADE GIFTS :(",
+        "I LOVE ALL THE SMOOCHES YOU SEND 🥺",
+        "I LOVE YOUR TEXT KISSES",
+        "I LOVE YOUR VOICE MESSAGE KISSES",
+        "I LOVE YOUR VIDEO CALL KISSES",
+        "I LOVE YOUR IN-GAME KISSES",
+        "I LOVE THE WAY YOU TALK",
+        "I LOVE YOUR LAUGH",
+        "I LOVE YOUR GIGGLES",
+        "I LOVE THE JOKES YOU MAKE",
+        "I LOVE THAT YOU LAUGH AT THE LITTLE THINGS I DO 🤭",
+        "I LOVE YOUR ADORABLE 'EEP' SOUND 🥺",
+        "I LOVE YOUR PLAYFUL JEALOUSY 🤭",
+        "I LOVE HOW YOU WANT ALL OF MY ATTENTION 🥺",
+        "I LOVE YOUR DELULU MOMENTS (BELIEVING YOU LOVE ME MORE 😂🫵)",
+        "I LOVE WHEN YOU DELETE TEXTS JUST SO YOU CAN REPLY FIRST 🥺",
+        "I LOVE WHEN WE FOLLOW EACH OTHER AROUND IN GAMES",
+        "I LOVE THAT YOU TELL ME EVERY SMALL THING YOU'RE DOING 🥺",
+        "I LOVE HOW KIND AND GOOD YOU ARE 🤭",
+        "I LOVE THAT YOU STUDY HARD",
+        "I LOVE THAT YOU SOMETIMES STAND UP TO YOUR PARENTS FOR US 🥺",
+        "I LOVE HEARING ABOUT YOUR DAY",
+        "I LOVE BEING PART OF ALL THIS WITH YOU 🥺",
+        "I LOVE HOW SAFE YOU MAKE ME FEEL 🥺",
+        "I LOVE THAT YOU ALWAYS TRY TO LIFT ME WHEN I'M DOWN 🥺🥺🥺🥺🥺🥺",
+        "I LOVE HOW YOU TURN BORING THINGS INTO FUN JUST BY BEING THERE 🥰",
+        "I LOVE THAT YOU NEVER JUDGE ME, EVEN WHEN I'M WEIRD",
+        "I LOVE HOW YOU GET EXCITED OVER THE SMALLEST THINGS",
+        "I LOVE HOW YOU MAKE ME BELIEVE IN LOVE MORE EACH DAY",
+        "I LOVE YOUR HONESTY, EVEN ABOUT LITTLE THINGS",
+        "I LOVE THAT ONLINE MOMENTS WITH YOU ALWAYS FEEL REAL",
+        "I LOVE THAT YOU MAKE ME LAUGH WHEN I NEED IT MOST 🥺",
+        "I LOVE THAT YOU CELEBRATE MY TINY WINS 🥺🥺🥺 SO CUTE ONG 🥺",
+      ];
+
+      let index = 0;
+      const total = reasons.length;
+      const reasonEl = document.getElementById("reason");
+      const metaEl = document.getElementById("meta");
+      const nextBtn = document.getElementById("nextBtn");
+
+      function showReason(i, direction = "next") {
+        // clamp in range
+        if (i < 0) i = total - 1;
+        if (i >= total) i = 0;
+        index = i;
+
+        // animate out then in
+        reasonEl.classList.remove("animate-in", "animate-out");
+        // small trick to restart animations
+        void reasonEl.offsetWidth;
+
+        reasonEl.classList.add("animate-out");
+        // after out animation finishes, swap text and animate in
+        setTimeout(() => {
+          reasonEl.textContent = reasons[index];
+          metaEl.textContent = `${index + 1} / ${total}`;
+          reasonEl.classList.remove("animate-out");
+          void reasonEl.offsetWidth;
+          reasonEl.classList.add("animate-in");
+        }, 180);
+      }
+
+      // Next button behavior
+      nextBtn.addEventListener("click", () => {
+        showReason(index + 1, "next");
+        // subtle pulse
+        nextBtn.animate(
+          [
+            { transform: "scale(1)" },
+            { transform: "scale(0.96)" },
+            { transform: "scale(1)" },
+          ],
+          { duration: 240, easing: "ease-out" }
+        );
+      });
+
+      // Keyboard support: space or right arrow -> next
+      window.addEventListener("keydown", (e) => {
+        if (e.code === "Space" || e.key === " " || e.key === "ArrowRight") {
+          e.preventDefault();
+          showReason(index + 1, "next");
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          showReason(index - 1, "prev");
+        }
+      });
+
+      // Swipe support (mobile)
+      (function setupSwipe() {
+        let startX = null;
+        const threshold = 40;
+        const vp = document.querySelector(".viewport");
+        vp.addEventListener(
+          "touchstart",
+          (ev) => {
+            startX = ev.touches[0].clientX;
+          },
+          { passive: true }
+        );
+        vp.addEventListener(
+          "touchend",
+          (ev) => {
+            if (startX === null) return;
+            const endX =
+              ev.changedTouches && ev.changedTouches[0]
+                ? ev.changedTouches[0].clientX
+                : null;
+            if (endX === null) return;
+            const dx = endX - startX;
+            if (dx < -threshold)
+              showReason(index + 1, "next"); // swipe left -> next
+            else if (dx > threshold) showReason(index - 1, "prev"); // swipe right -> prev
+            startX = null;
+          },
+          { passive: true }
+        );
+      })();
+
+      // initialize
+      showReason(0);
+    </script>
+  </body>
+</html>

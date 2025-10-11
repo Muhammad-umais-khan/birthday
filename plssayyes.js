@@ -39,9 +39,7 @@ const yesBtn = document.getElementById("yesBtn");
 const modal = document.getElementById("modal");
 const generateBtn = document.getElementById("generateBtn");
 const downloadBtn = document.getElementById("downloadBtn");
-const printBtn = document.getElementById("printBtn");
 const closeModal = document.getElementById("closeModal");
-const shareBtn = document.getElementById("shareBtn");
 
 yesBtn.addEventListener("click", () => {
   spawnHearts(60);
@@ -55,8 +53,16 @@ closeModal.addEventListener("click", () => {
   modal.style.display = "none";
 });
 
-const canvas = document.getElementById("certCanvas");
-const ctx = canvas.getContext("2d");
+// const canvas = document.getElementById("certCanvas");
+// const ctx = canvas.getContext("2d");
+// initial draw
+let canvas, ctx;
+
+window.addEventListener("load", () => {
+  canvas = document.getElementById("certCanvas");
+  ctx = canvas.getContext("2d");
+  drawCertificate("Umais", "Maria", new Date().toLocaleDateString());
+});
 
 function drawCertificate(your, their, dateStr) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -130,7 +136,7 @@ downloadBtn.addEventListener("click", () => {
   const data = canvas.toDataURL("image/png");
   const a = document.createElement("a");
   a.href = data;
-  a.download = "silly-marriage-certificate.png";
+  a.download = "superOfficial-marriage-certificate.png";
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -142,14 +148,4 @@ printBtn.addEventListener("click", () => {
   w.document.write(`<img src="${data}" style="max-width:100%;height:auto">`);
   w.document.title = "Marriage Certificate";
   w.print();
-});
-
-// shareBtn fun message
-shareBtn.addEventListener("click", () => {
-  alert("we are now officially in love. 🎉");
-});
-
-// initial draw
-window.addEventListener("load", () => {
-  drawCertificate("Umais", "Maria", new Date().toLocaleDateString());
 });

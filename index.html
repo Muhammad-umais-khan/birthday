@@ -22,14 +22,7 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <div id="gate">
-      <h1>
-        🎉 Surprise at <span id="gateDays">--</span>d
-        <span id="gateHours">--</span>h <span id="gateMins">--</span>m
-        <span id="gateSecs">--</span>s 🎉
-      </h1>
-    </div>
-    <div id="realContent" style="display: none">
+    <div id="realContent">
       <div class="card" role="main" aria-label="Birthday card">
         <div class="hearts" id="hearts"></div>
 
@@ -65,7 +58,15 @@
 
         <main>
           <section class="left">
-            <h3 style="margin: 0">little reasons (click a card)</h3>
+            <h3 style="margin: 0">
+              little reasons (click a card)
+              <a
+                style="color: inherit; text-decoration: none"
+                href="more reasons for why i love my baby.html"
+              >
+                click me :))</a
+              >
+            </h3>
             <div class="reasons">
               <div class="flip" onclick="flip(this)">
                 <div class="card-face">
