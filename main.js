@@ -84,6 +84,8 @@ revealBtn.addEventListener("click", () => {
     "my baby/1st fav.jpg",
     "my baby/2nd fav.jpg",
     "my baby/3rd fav.jpg",
+    "my baby/4th fav.jpg",
+    "my baby/5th fav.jpg",
   ].map((u) => encodeURI(u));
 
   if (!IMAGES.length) return;
@@ -130,4 +132,67 @@ revealBtn.addEventListener("click", () => {
     "mouseleave",
     () => (timer = setInterval(showNext, CHANGE_INTERVAL))
   );
+})();
+document.addEventListener(
+  "contextmenu",
+  function (e) {
+    e.preventDefault();
+    // optionally show a small message:
+    // alert('Right-click is disabled on this site.');
+  },
+  { passive: false }
+);
+
+// Disable select / copy keyboard shortcuts and devtools keys
+document.addEventListener(
+  "keydown",
+  function (e) {
+    // F12
+    if (e.key === "F12" || e.keyCode === 123) {
+      e.preventDefault();
+      return;
+    }
+    // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+U / Ctrl+S / Ctrl+Shift+C
+    if (
+      e.ctrlKey &&
+      e.shiftKey &&
+      (e.key === "I" || e.key === "J" || e.key === "C")
+    ) {
+      e.preventDefault();
+      return;
+    }
+    if (e.ctrlKey && (e.key === "U" || e.key === "S")) {
+      e.preventDefault();
+      return;
+    }
+    // Cmd on Mac
+    if (e.metaKey && e.altKey && e.key === "I") {
+      e.preventDefault();
+      return;
+    }
+  },
+  { passive: false }
+);
+
+// Optional: very crude "devtools open" detection (heuristic, not reliable)
+(function detectDevTools() {
+  let open = false;
+  const threshold = 160;
+  function check() {
+    const widthDiff = window.outerWidth - window.innerWidth;
+    const heightDiff = window.outerHeight - window.innerHeight;
+    // if devtools docked, these diffs often become large
+    if (widthDiff > threshold || heightDiff > threshold) {
+      if (!open) {
+        open = true;
+        console.warn("DevTools detected (heuristic)."); // visible in console only
+        // take action: redirect, obfuscate, or show a cover — be careful with UX
+        // window.location.href = '/'; // example extreme action (not recommended)
+      }
+    } else {
+      open = false;
+    }
+  }
+  // check periodically (cheap)
+  setInterval(check, 1000);
 })();

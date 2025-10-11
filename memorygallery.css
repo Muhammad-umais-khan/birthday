@@ -1,0 +1,237 @@
+:root {
+  --bg: #fff7fb;
+  --accent: #ff8fb1;
+  --accent-2: #8ee7d6;
+  --text: #333;
+  --card: #fff;
+  --dark-overlay: rgba(10, 12, 20, 0.75);
+  --glass: rgba(255, 255, 255, 0.06);
+}
+
+/* Reset & layout */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial;
+
+  background: #0e1018;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-attachment: fixed;
+  flex-direction: column;
+}
+body > h1 {
+  color: azure;
+}
+
+/* dark frame that sits above the pastel background to give "dark-ish" feel */
+.stage {
+  width: min(980px, 96vw);
+  height: min(640px, 86vh);
+  background: linear-gradient(180deg, var(--dark-overlay), rgba(0, 0, 0, 0.6));
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  box-shadow: 0 12px 40px rgba(8, 10, 20, 0.6), 0 2px 6px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+/* The card that contains the picture */
+.card {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.slide-wrap {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img.slide {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  transition: opacity 550ms ease,
+    transform 700ms cubic-bezier(0.22, 0.9, 0.33, 1);
+  border-radius: 0;
+  box-shadow: inset 0 -60px 120px rgba(0, 0, 0, 0.18);
+}
+
+/* caption overlay on top of the image */
+.caption {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.16));
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: clamp(16px, 2.4vw, 22px);
+  backdrop-filter: blur(6px);
+  line-height: 1.2;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 99;
+}
+
+.caption .who {
+  font-weight: 700;
+  opacity: 0.95;
+}
+.caption .when {
+  display: block;
+  margin-top: 6px;
+  font-weight: 500;
+  opacity: 0.9;
+  font-size: 0.85em;
+}
+
+/* controls */
+.controls {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  border: none;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(50, 30, 80, 0.18);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 12px;
+  box-shadow: none;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0e1018;
+  cursor: pointer;
+  transition: transform 180ms ease, background 200ms ease;
+}
+.dot.active {
+  background: var(--accent);
+  transform: scale(1.25);
+}
+
+/* left / right arrow floating buttons */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 6px;
+  padding: 22px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.45);
+  z-index: 999;
+  background: #0e1018;
+}
+.arrow.left {
+  left: 8px;
+}
+.arrow.right {
+  right: 8px;
+}
+
+/* footer area for small info */
+.meta {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: #050508;
+  border-top: 1px solid rgba(0, 0, 0, 0.03);
+}
+.meta .progress {
+  font-size: 13px;
+  color: rgb(139, 139, 139);
+}
+.meta small {
+  opacity: 0.7;
+}
+
+/* responsive tweaks */
+@media (max-width: 720px) {
+  .stage {
+    padding: 14px;
+  }
+  .caption {
+    left: 12px;
+    right: 12px;
+    font-size: 16px;
+  }
+  .arrow {
+    display: none;
+  }
+  .btn {
+    padding: 8px 10px;
+  }
+}

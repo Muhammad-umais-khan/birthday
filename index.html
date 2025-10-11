@@ -25,58 +25,58 @@
     <style>
       /* --- NEW: Your Color Theme --- */
       :root {
-            --bg: #fff7fb;
-            --accent: #ff8fb1;
-            --accent-2: #8ee7d6; /* A second accent color, just in case */
-            --text: #333;
-            --card: #fff;
-        }
+        --bg: #fff7fb;
+        --accent: #ff8fb1;
+        --accent-2: #8ee7d6; /* A second accent color, just in case */
+        --text: #333;
+        --card: #fff;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg); /* Applied theme background */
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg); /* Applied theme background */
+      }
 
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg); /* Applied theme background */
-            color: var(--text);   /* Applied theme text color */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 9999;
-            transition: opacity 0.8s ease-out;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
+      #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg); /* Applied theme background */
+        color: var(--text); /* Applied theme text color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 9999;
+        transition: opacity 0.8s ease-out;
+        padding: 0 20px;
+        box-sizing: border-box;
+      }
 
-        #splash-screen h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
+      #splash-screen h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
 
-        #timer {
-            font-size: 4rem;
-            font-weight: bold;
-            letter-spacing: 0.2rem;
-            text-align: center;
-            color: var(--accent); /* Applied theme accent color */
-        }
+      #timer {
+        font-size: 4rem;
+        font-weight: bold;
+        letter-spacing: 0.2rem;
+        text-align: center;
+        color: var(--accent); /* Applied theme accent color */
+      }
 
-        #main-content {
-            display: none;
-            padding: 40px;
-            color: var(--text); /* Applied theme text color */
-            background-color: var(--bg);
-        }
+      #main-content {
+        display: none;
+        padding: 40px;
+        color: var(--text); /* Applied theme text color */
+        background-color: var(--bg);
+      }
       @media (max-width: 900px) {
         #splash-screen {
           max-width: 100vw;
@@ -84,171 +84,177 @@
           padding: 0;
         }
         #splash-screen h1 {
-
-        font-size: 2rem;
-      letter-spacing: 0.1rem;}
-      body{
-        max-width: 100vw;
-        max-height: 100vh;
-        overflow: hidden;
-        display: block;
-
+          font-size: 2rem;
+          letter-spacing: 0.1rem;
+        }
+        body {
+          max-width: 100vw;
+          max-height: 100vh;
+          display: block;
+        }
       }
-      }
-  </style>
-</head>
-<body>
+    </style>
+    <body>
+      <div id="splash-screen">
+        <h1 id="timer"></h1>
+      </div>
 
-  <div id="splash-screen">
-      <h1 id="timer"></h1>
-  </div>
+      <script>
+        (function () {
+          // --- SETTINGS ---
+          // Set the target date and time (YYYY-MM-DDTHH:MM:SS format)
+          // This is set to Oct 12, 2025, at 11:00 PM (23:00)
+          const targetDate = new Date("2025-10-12T23:00:00");
 
-  <script>
-    (function() {
-        // --- SETTINGS ---
-        // Set the target date and time (YYYY-MM-DDTHH:MM:SS format)
-        // This is set to Oct 12, 2025, at 11:00 PM (23:00)
-        const targetDate = new Date('2025-10-12T23:00:00');
-        // ----------------
+          const timerElement = document.getElementById("timer");
+          const splashScreen = document.getElementById("splash-screen");
+          const mainContent = document.getElementById("main-content");
 
-        const timerElement = document.getElementById('timer');
-        const splashScreen = document.getElementById('splash-screen');
-        const mainContent = document.getElementById('main-content');
-
-        const countdown = setInterval(() => {
+          const countdown = setInterval(() => {
             const now = new Date().getTime();
             const distance = targetDate - now;
 
             // If the countdown is over
             if (distance <= 0) {
-                clearInterval(countdown);
-                timerElement.innerHTML = "Welcome!";
-                
-                // Fade out the splash screen
-                splashScreen.style.opacity = '0';
+              clearInterval(countdown);
+              timerElement.innerHTML = "Welcome!";
 
-                // After the fade, hide it and show the main content
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    mainContent.style.display = 'block';
-                }, 800); // Matches the CSS transition time
-                return;
+              // Fade out the splash screen
+              splashScreen.style.opacity = "0";
+
+              // After the fade, hide it and show the main content
+              setTimeout(() => {
+                splashScreen.style.display = "none";
+                mainContent.style.display = "block";
+              }, 800); // Matches the CSS transition time
+              return;
             }
 
             // Time calculations for days, hours, minutes, and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const hours = Math.floor(
+              (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            const minutes = Math.floor(
+              (distance % (1000 * 60 * 60)) / (1000 * 60)
+            );
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Add leading zeros to numbers less than 10 for a clean look
-            const formattedHours = String(hours).padStart(2, '0');
-            const formattedMinutes = String(minutes).padStart(2, '0');
-            const formattedSeconds = String(seconds).padStart(2, '0');
+            const formattedHours = String(hours).padStart(2, "0");
+            const formattedMinutes = String(minutes).padStart(2, "0");
+            const formattedSeconds = String(seconds).padStart(2, "0");
 
             // Display the result in the element with id="timer"
             timerElement.innerHTML = `${days}d : ${formattedHours}h : ${formattedMinutes}m : ${formattedSeconds}s`;
+          }, 1000); // Update every second
+        })();
+      </script>
+      <div id="realContent">
+        <div class="card" role="main" aria-label="Birthday card">
+          <div class="hearts" id="hearts"></div>
 
-        }, 1000); // Update every second
-    })();
-</script>
-    <div id="realContent">
-      <div class="card" role="main" aria-label="Birthday card">
-        <div class="hearts" id="hearts"></div>
+          <header>
+            <div>
+              <div class="title">Happy Birthday 🎂</div>
+              <div class="subtitle">
+                Oct 13 — counting down to your special day
+              </div>
+              <div class="typed" id="typed">
+                halloo this message types itself... ✨
+              </div>
+            </div>
+            <div class="countdown" aria-hidden="false">
+              <div class="box">
+                <div class="n" id="days">--</div>
+                <div class="l">Days</div>
+              </div>
+              <div class="box">
+                <div class="n" id="hours">--</div>
+                <div class="l">Hours</div>
+              </div>
+              <div class="box">
+                <div class="n" id="mins">--</div>
+                <div class="l">Mins</div>
+              </div>
+              <div class="box">
+                <div class="n" id="secs">--</div>
+                <div class="l">Secs</div>
+              </div>
+            </div>
+          </header>
 
-        <header>
-          <div>
-            <div class="title">Happy Birthday 🎂</div>
-            <div class="subtitle">
-              Oct 13 — counting down to your special day
-            </div>
-            <div class="typed" id="typed">
-              halloo this message types itself... ✨
-            </div>
-          </div>
-          <div class="countdown" aria-hidden="false">
-            <div class="box">
-              <div class="n" id="days">--</div>
-              <div class="l">Days</div>
-            </div>
-            <div class="box">
-              <div class="n" id="hours">--</div>
-              <div class="l">Hours</div>
-            </div>
-            <div class="box">
-              <div class="n" id="mins">--</div>
-              <div class="l">Mins</div>
-            </div>
-            <div class="box">
-              <div class="n" id="secs">--</div>
-              <div class="l">Secs</div>
-            </div>
-          </div>
-        </header>
-
-        <main>
-          <section class="left">
-            <h3 style="margin: 0">
-              little reasons (click a card)
-              <a
-                style="color: inherit; text-decoration: none"
-                href="more reasons for why i love my baby.html"
-              >
-                click me :))</a
-              >
-            </h3>
-            <div class="reasons">
-              <div class="flip" onclick="flip(this)">
-                <div class="card-face">
-                  <div class="front">Your Smile</div>
-                  <div class="back">Lights up my day like a sunrise ☀️</div>
+          <main>
+            <section class="left">
+              <h3 style="margin: 0">
+                little reasons (click a card)
+                <a
+                  style="color: inherit; text-decoration: none"
+                  href="more reasons for why i love my baby.html"
+                >
+                  click me :))</a
+                >
+              </h3>
+              <div class="reasons">
+                <div class="flip" onclick="flip(this)">
+                  <div class="card-face">
+                    <div class="front">Your Smile</div>
+                    <div class="back">Lights up my day like a sunrise ☀️</div>
+                  </div>
                 </div>
-              </div>
-              <div class="flip" onclick="flip(this)">
-                <div class="card-face">
-                  <div class="front">Your Laugh</div>
-                  <div class="back">Makes everything instantly better 😄</div>
+                <div class="flip" onclick="flip(this)">
+                  <div class="card-face">
+                    <div class="front">Your Laugh</div>
+                    <div class="back">Makes everything instantly better 😄</div>
+                  </div>
                 </div>
-              </div>
-              <div class="flip" onclick="flip(this)">
-                <div class="card-face">
-                  <div class="front">How You Care</div>
-                  <div class="back">You're thoughtful in tiny ways 💛</div>
+                <div class="flip" onclick="flip(this)">
+                  <div class="card-face">
+                    <div class="front">How You Care</div>
+                    <div class="back">You're thoughtful in tiny ways 💞</div>
+                  </div>
                 </div>
-              </div>
-              <div class="flip" onclick="flip(this)">
-                <div class="card-face">
-                  <div class="front">Your Roblox Skill</div>
-                  <div class="back">
-                    Can beat any obby i couldn't even try 😅
+                <div class="flip" onclick="flip(this)">
+                  <div class="card-face">
+                    <div class="front">Your Roblox Skill</div>
+                    <div class="back">
+                      Can beat any obby i couldn't even try 😭
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <aside class="right">
-            <div class="photo" id="photo">
-              <div class="slide" id="slideA" aria-hidden="true"></div>
-              <div class="slide" id="slideB" aria-hidden="true"></div>
-              <div class="photo-text" id="photoText">Add her photo here</div>
-            </div>
+            <aside class="right">
+              <div class="photo" id="photo">
+                <div class="slide" id="slideA" aria-hidden="true"></div>
+                <div class="slide" id="slideB" aria-hidden="true"></div>
+                <div class="photo-text" id="photoText">Add her photo here</div>
+              </div>
 
-            <div class="reveal">
-              <div style="font-weight: 700">Your gift</div>
-              <div class="gift" id="gift">Click below to reveal 🎁</div>
-              <button class="btn" id="revealBtn">Reveal Gift</button>
-            </div>
-          </aside>
-        </main>
+              <div class="reveal">
+                <div style="font-weight: 700">Your gift</div>
+                <div class="gift" id="gift">Click below to reveal 🎁</div>
+                <button class="btn" id="revealBtn">Reveal Gift</button>
+              </div>
+              <h1>
+                <a href="memorygallery.html" style="color: #333333">
+                  Special memories 🥺</a
+                >
+              </h1>
+            </aside>
+          </main>
 
-        <footer style="margin-top: 18px; color: #666; font-size: 0.9rem">
-          Made with ❤️
-          <a id="click" href="plssayyes.html">click this link 👀</a>
-        </footer>
+          <footer style="margin-top: 18px; color: #666; font-size: 0.9rem">
+            Made with ❤️
+            <a id="click" href="plssayyes.html"
+              >click this link 👀(only on ur laptopp!!)</a
+            >
+          </footer>
+        </div>
       </div>
-    </div>
 
-    <script src="main.js"></script>
+      <script src="main.js"></script>
+    </body>
   </body>
 </html>
