@@ -234,6 +234,25 @@
     </style>
   </head>
   <body>
+    <audio id="bg-music" loop>
+      <source src="song/goldenbrown.mp3" type="audio/mpeg" />
+    </audio>
+    <!-- code to make it lighter -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.getElementById("bg-music");
+
+        function startMusic() {
+          audio.volume = 0.1; // gentle rhythm
+          audio.play().catch((err) => console.log("Autoplay blocked:", err));
+          document.removeEventListener("click", startMusic);
+          document.removeEventListener("scroll", startMusic);
+        }
+
+        document.addEventListener("click", startMusic);
+        document.addEventListener("scroll", startMusic);
+      });
+    </script>
     <main class="card" role="main" aria-label="100 reasons I love you card">
       <div class="card-header">
         <div class="badge">❤</div>

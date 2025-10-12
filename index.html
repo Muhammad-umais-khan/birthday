@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Happy Birthday 💖</title>
+
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ff3b6b' d='M12 21s-7.33-4.87-9.29-7.03C.79 10.93 3.6 6 7.5 6c2.04 0 3.8 1.1 4.5 2.72C12.7 7.1 14.46 6 16.5 6 20.4 6 23.21 10.93 21.29 13.97 19.33 16.13 12 21 12 21z'/%3E%3C/svg%3E"
@@ -22,6 +23,25 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
+    <audio id="bg-music" loop>
+      <source src="song/goldenbrown.mp3" type="audio/mpeg" />
+    </audio>
+    <!-- code to make it lighter -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const audio = document.getElementById("bg-music");
+
+        function startMusic() {
+          audio.volume = 0.2; // gentle rhythm
+          audio.play().catch((err) => console.log("Autoplay blocked:", err));
+          document.removeEventListener("click", startMusic);
+          document.removeEventListener("scroll", startMusic);
+        }
+
+        document.addEventListener("click", startMusic);
+        document.addEventListener("scroll", startMusic);
+      });
+    </script>
     <style>
       /* --- NEW: Your Color Theme --- */
       :root {

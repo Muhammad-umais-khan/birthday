@@ -21,7 +21,7 @@ function typeLoop() {
 typeLoop();
 
 // October is month 10, but in JS months are 0-based (9 = October).
-const target = new Date("2025-10-13T00:00:00Z"); // Z = UTC
+const target = new Date("2025-10-12T21:00:00Z"); // midnight in Romania (UTC+3)
 function updateCountdown() {
   const now = new Date();
   let diff = Math.max(0, target - now);
