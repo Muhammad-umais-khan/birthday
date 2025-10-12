@@ -115,61 +115,9 @@
       }
     </style>
     <body>
-      <div id="splash-screen">
-        <h1 id="timer"></h1>
-      </div>
 
-      <script>
-        (function () {
-          // --- SETTINGS ---
-          // Set the target date and time (YYYY-MM-DDTHH:MM:SS format)
-          // This is set to Oct 12, 2025, at 11:00 PM (23:00)
-          const targetDate = new Date("2025-10-12T23:00:00");
 
-          const timerElement = document.getElementById("timer");
-          const splashScreen = document.getElementById("splash-screen");
-          const mainContent = document.getElementById("main-content");
 
-          const countdown = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            // If the countdown is over
-            if (distance <= 0) {
-              clearInterval(countdown);
-              timerElement.innerHTML = "Welcome!";
-
-              // Fade out the splash screen
-              splashScreen.style.opacity = "0";
-
-              // After the fade, hide it and show the main content
-              setTimeout(() => {
-                splashScreen.style.display = "none";
-                mainContent.style.display = "block";
-              }, 800); // Matches the CSS transition time
-              return;
-            }
-
-            // Time calculations for days, hours, minutes, and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(
-              (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-            );
-            const minutes = Math.floor(
-              (distance % (1000 * 60 * 60)) / (1000 * 60)
-            );
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Add leading zeros to numbers less than 10 for a clean look
-            const formattedHours = String(hours).padStart(2, "0");
-            const formattedMinutes = String(minutes).padStart(2, "0");
-            const formattedSeconds = String(seconds).padStart(2, "0");
-
-            // Display the result in the element with id="timer"
-            timerElement.innerHTML = `${days}d : ${formattedHours}h : ${formattedMinutes}m : ${formattedSeconds}s`;
-          }, 1000); // Update every second
-        })();
-      </script>
       <div id="realContent">
         <div class="card" role="main" aria-label="Birthday card">
           <div class="hearts" id="hearts"></div>
