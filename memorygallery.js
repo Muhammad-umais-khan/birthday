@@ -63,173 +63,199 @@ const slides = [
   },
 ];
 
-// DOM refs
-const slideWrap = document.getElementById("slideWrap");
-const caption = document.getElementById("caption");
-const dotsContainer = document.getElementById("dots");
-const progressText = document.getElementById("progressText");
-const prevBtn = document.getElementById("prev");
-const nextBtn = document.getElementById("next");
+// --- NEW PRELOADING LOGIC ---
 
-let current = 0;
-let autoplay = true;
-let timer = null;
-const AUTOPLAY_DELAY = 5000;
+function preloadImages(sources, callback) {
+  const totalImages = sources.length;
+  let imagesLoaded = 0;
 
-function createSlideElement(slide, index) {
-  const img = document.createElement("img");
-  img.className = "slide";
-  img.src = slide.src;
-  img.alt = slide.title || `memory ${index + 1}`;
-  img.loading = "lazy";
-  img.style.opacity = 0;
-  img.style.position = "absolute";
-  img.style.left = 0;
-  img.style.top = 0;
-  img.style.width = "100%";
-  img.style.height = "100%";
-  img.style.objectFit = "cover";
-  img.dataset.index = index;
-  return img;
+  sources.forEach((source) => {
+    const img = new Image();
+    img.src = source.src;
+
+    // This runs when an image is successfully loaded
+    img.onload = () => {
+      imagesLoaded++;
+      // Check if all images are loaded
+      if (imagesLoaded === totalImages) {
+        callback(); // Run the function to start the slideshow
+      }
+    };
+
+    // This runs if an image fails to load, so the loader doesn't get stuck
+    img.onerror = () => {
+      imagesLoaded++;
+      console.error("Could not load image:", source.src);
+      if (imagesLoaded === totalImages) {
+        callback();
+      }
+    };
+  });
 }
 
-// initialize slides
-slides.forEach((s, i) => {
-  const el = createSlideElement(s, i);
-  if (i === 0) {
-    el.style.opacity = 1;
-    el.style.transform = "scale(1)";
-  } else {
-    el.style.opacity = 0;
-    el.style.transform = "scale(1.04)";
+// This function contains ALL your original slideshow code
+function initializeSlideshow() {
+  // Hide the loader and show the content
+  document.getElementById("loader-wrapper").style.display = "none";
+  document.getElementById("content-wrapper").style.display = "block";
+
+  // DOM refs
+  const slideWrap = document.getElementById("slideWrap");
+  const caption = document.getElementById("caption");
+  const dotsContainer = document.getElementById("dots");
+  const progressText = document.getElementById("progressText");
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+
+  let current = 0;
+  let autoplay = true;
+  let timer = null;
+  const AUTOPLAY_DELAY = 5000;
+
+  function createSlideElement(slide, index) {
+    const img = document.createElement("img");
+    img.className = "slide";
+    img.src = slide.src;
+    img.alt = slide.title || `memory ${index + 1}`;
+    img.style.opacity = 0;
+    img.style.position = "absolute";
+    img.style.left = 0;
+    img.style.top = 0;
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";
+    img.dataset.index = index;
+    return img;
   }
-  slideWrap.appendChild(el);
 
-  // dot
-  const dot = document.createElement("div");
-  dot.className = "dot" + (i === 0 ? " active" : "");
-  dot.dataset.index = i;
-  dot.addEventListener("click", () => goTo(parseInt(dot.dataset.index)));
-  dotsContainer.appendChild(dot);
-});
+  // initialize slides
+  slides.forEach((s, i) => {
+    const el = createSlideElement(s, i);
+    if (i === 0) {
+      el.style.opacity = 1;
+      el.style.transform = "scale(1)";
+    } else {
+      el.style.opacity = 0;
+      el.style.transform = "scale(1.04)";
+    }
+    slideWrap.appendChild(el);
 
-function updateCaption(i) {
-  const s = slides[i];
-  caption.querySelector(".who")?.remove?.();
-  caption.querySelector(".when")?.remove?.();
-  const who = document.createElement("span");
-  who.className = "who";
-  who.textContent = s.title || "";
-  const when = document.createElement("span");
-  when.className = "when";
-  when.textContent = s.subtitle || "";
-  caption.prepend(when);
-  caption.prepend(who);
-}
+    const dot = document.createElement("div");
+    dot.className = "dot" + (i === 0 ? " active" : "");
+    dot.dataset.index = i;
+    dot.addEventListener("click", () => goTo(parseInt(dot.dataset.index)));
+    dotsContainer.appendChild(dot);
+  });
 
-function goTo(i) {
-  if (i < 0) i = slides.length - 1;
-  if (i >= slides.length) i = 0;
-  if (i === current) return;
+  function updateCaption(i) {
+    const s = slides[i];
+    caption.querySelector(".who")?.remove?.();
+    caption.querySelector(".when")?.remove?.();
+    const who = document.createElement("span");
+    who.className = "who";
+    who.textContent = s.title || "";
+    const when = document.createElement("span");
+    when.className = "when";
+    when.textContent = s.subtitle || "";
+    caption.prepend(when);
+    caption.prepend(who);
+  }
 
-  const prev = slideWrap.querySelector('img[data-index="' + current + '"]');
-  const next = slideWrap.querySelector('img[data-index="' + i + '"]');
-  if (!next) return;
+  function goTo(i) {
+    if (i < 0) i = slides.length - 1;
+    if (i >= slides.length) i = 0;
+    if (i === current) return;
 
-  // animate
-  prev.style.transition =
-    "opacity 520ms ease, transform 700ms cubic-bezier(.22,.9,.33,1)";
-  next.style.transition =
-    "opacity 520ms ease, transform 700ms cubic-bezier(.22,.9,.33,1)";
-  prev.style.opacity = 0;
-  prev.style.transform = "scale(1.04)";
-  next.style.opacity = 1;
-  next.style.transform = "scale(1)";
+    const prev = slideWrap.querySelector('img[data-index="' + current + '"]');
+    const next = slideWrap.querySelector('img[data-index="' + i + '"]');
+    if (!next) return;
 
-  // dots
-  dotsContainer
-    .querySelectorAll(".dot")
-    .forEach((d) => d.classList.remove("active"));
-  dotsContainer
-    .querySelector('.dot[data-index="' + i + '"]')
-    ?.classList.add("active");
+    prev.style.transition =
+      "opacity 520ms ease, transform 700ms cubic-bezier(.22,.9,.33,1)";
+    next.style.transition =
+      "opacity 520ms ease, transform 700ms cubic-bezier(.22,.9,.33,1)";
+    prev.style.opacity = 0;
+    prev.style.transform = "scale(1.04)";
+    next.style.opacity = 1;
+    next.style.transform = "scale(1)";
 
-  current = i;
-  progressText.textContent = `${current + 1} / ${slides.length}`;
-  updateCaption(current);
+    dotsContainer
+      .querySelectorAll(".dot")
+      .forEach((d) => d.classList.remove("active"));
+    dotsContainer
+      .querySelector('.dot[data-index="' + i + '"]')
+      ?.classList.add("active");
+
+    current = i;
+    progressText.textContent = `${current + 1} / ${slides.length}`;
+    updateCaption(current);
+    resetAutoplay();
+  }
+
+  function next() {
+    goTo(current + 1);
+  }
+  function prev() {
+    goTo(current - 1);
+  }
+
+  prevBtn.addEventListener("click", prev);
+  nextBtn.addEventListener("click", next);
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") prev();
+    if (e.key === "ArrowRight") next();
+    if (e.key === " ") {
+      autoplay = !autoplay;
+      resetAutoplay();
+    }
+  });
+
+  function resetAutoplay() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+    if (autoplay) timer = setInterval(() => next(), AUTOPLAY_DELAY);
+  }
+
+  (function addSwipe() {
+    let startX = 0,
+      startY = 0,
+      moved = false;
+    slideWrap.addEventListener(
+      "touchstart",
+      (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        moved = false;
+      },
+      { passive: true }
+    );
+    slideWrap.addEventListener(
+      "touchmove",
+      (e) => {
+        moved = true;
+      },
+      { passive: true }
+    );
+    slideWrap.addEventListener("touchend", (e) => {
+      if (!moved) return;
+      const endX = (e.changedTouches && e.changedTouches[0].clientX) || 0;
+      const dx = endX - startX;
+      if (Math.abs(dx) > 30) {
+        if (dx < 0) next();
+        else prev();
+      }
+    });
+  })();
+
+  // start
+  updateCaption(0);
+  progressText.textContent = `1 / ${slides.length}`;
   resetAutoplay();
 }
 
-function next() {
-  goTo(current + 1);
-}
-function prev() {
-  goTo(current - 1);
-}
-
-prevBtn.addEventListener("click", prev);
-nextBtn.addEventListener("click", next);
-
-// keyboard nav
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") prev();
-  if (e.key === "ArrowRight") next();
-  if (e.key === " ") {
-    autoplay = !autoplay;
-    resetAutoplay();
-  }
-});
-
-// autoplay
-function resetAutoplay() {
-  if (timer) {
-    clearInterval(timer);
-    timer = null;
-  }
-  if (autoplay) timer = setInterval(() => next(), AUTOPLAY_DELAY);
-}
-
-// basic swipe support
-(function addSwipe() {
-  let startX = 0,
-    startY = 0,
-    moved = false;
-  slideWrap.addEventListener(
-    "touchstart",
-    (e) => {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      moved = false;
-    },
-    { passive: true }
-  );
-  slideWrap.addEventListener(
-    "touchmove",
-    (e) => {
-      moved = true;
-    },
-    { passive: true }
-  );
-  slideWrap.addEventListener("touchend", (e) => {
-    if (!moved) return;
-    const endX = (e.changedTouches && e.changedTouches[0].clientX) || 0;
-    const dx = endX - startX;
-    if (Math.abs(dx) > 30) {
-      if (dx < 0) next();
-      else prev();
-    }
-  });
-})();
-
-// small optimization: pre-load next image
-function preloadNext() {
-  const nextIndex = (current + 1) % slides.length;
-  const nextSrc = slides[nextIndex].src;
-  const i = new Image();
-  i.src = nextSrc;
-}
-
-// start
-updateCaption(0);
-progressText.textContent = `1 / ${slides.length}`;
-resetAutoplay();
+// Start the preloading process, and once it's done, run the initializeSlideshow function
+preloadImages(slides, initializeSlideshow);
+  

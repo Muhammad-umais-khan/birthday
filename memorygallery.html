@@ -7,33 +7,41 @@
     <link rel="stylesheet" href="memorygallery.css" />
   </head>
   <body>
-    <h1>JUST A GLIMPS OF OUR SPECIAL MOMENTS</h1>
-    <div class="stage" aria-label="Memory gallery slideshow">
-      <div class="card">
-        <div class="slide-wrap" id="slideWrap">
-          <!-- slides will be injected here -->
-          <div class="caption" id="caption">
-            <span class="who">remember when we did this? 🥺</span>
-            <span class="when"
-              >that summer — forever in the pocket of my heart</span
-            >
+    <div id="loader-wrapper">
+      <div class="loader-text">Loading Memories...</div>
+      <div class="loader-spinner"></div>
+    </div>
+
+    <main id="content-wrapper">
+      <h1>JUST A GLIMPS OF OUR SPECIAL MOMENTS</h1>
+      <div class="stage" aria-label="Memory gallery slideshow">
+        <div class="card">
+          <div class="slide-wrap" id="slideWrap">
+            <!-- slides will be injected here -->
+            <div class="caption" id="caption">
+              <span class="who">remember when we did this? 🥺</span>
+              <span class="when"
+                >that summer — forever in the pocket of my heart</span
+              >
+            </div>
+
+            <button class="arrow left" id="prev" aria-label="Previous">
+              ◀
+            </button>
+            <button class="arrow right" id="next" aria-label="Next">▶</button>
           </div>
 
-          <button class="arrow left" id="prev" aria-label="Previous">◀</button>
-          <button class="arrow right" id="next" aria-label="Next">▶</button>
-        </div>
-
-        <div class="meta">
-          <div class="nav">
-            <div class="dots" id="dots" aria-hidden="false"></div>
-          </div>
-          <div class="progress">
-            <small id="progressText">1 / 5</small>
+          <div class="meta">
+            <div class="nav">
+              <div class="dots" id="dots" aria-hidden="false"></div>
+            </div>
+            <div class="progress">
+              <small id="progressText">1 / 5</small>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
+    </main>
     <script src="memorygallery.js"></script>
   </body>
 </html>
