@@ -12,18 +12,18 @@ const slides = [
       "i remember thinking how much i wanna be in this position this second irl 🥺🥺",
   },
   {
-    src: "ourpics/crang.jpg",
+    src: "ourpics/CRANG.jpg",
     title: "remember this pic?? 😫",
     subtitle: "i remember crying so so much HAHAHAHAHAH 😭😭😭😭",
   },
   {
-    src: "ourpics/omds my no skin days.jpg",
+    src: "ourpics/OMDS MY NO SKIN DAYS.jpg",
     title: "remember when this game?? 😫",
     subtitle:
       " I REMEMBER HOW THIS GAME WAS BEATIFUL BUT I HAD NO SKINS AND I MESSED THE PIC AHHAHAHAHHA 😭",
   },
   {
-    src: "ourpics/omds us.jpg",
+    src: "ourpics/OMDS US.jpg",
     title:
       "I. REMEMBER. THIS. EXACT. MOMENT. THE. WHOLE. SESSION. SO CLEARLY. 😫",
     subtitle:
@@ -258,4 +258,3 @@ function initializeSlideshow() {
 
 // Start the preloading process, and once it's done, run the initializeSlideshow function
 preloadImages(slides, initializeSlideshow);
-  
