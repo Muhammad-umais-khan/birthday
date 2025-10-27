@@ -84,7 +84,7 @@ function drawCertificate(your, their, dateStr) {
   ctx.font = "500 18px Poppins, sans-serif";
   ctx.textAlign = "center";
   const line1 = `This certifies that ${your} and ${their}`;
-  const line2 = `have agreed to be silly, kind, and to share pizza and Robux forever.`;
+  const line2 = `have agreed to be silly, in love, and to share pizza and Robux forever.`;
   ctx.fillText(line1, canvas.width / 2, 160);
   ctx.fillText(line2, canvas.width / 2, 190);
 
